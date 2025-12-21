@@ -10,9 +10,9 @@ After mastering the Go standard library in [GoServe], this project marks the tra
 
 I am building this backend-only service over one week to master the Gin lifecycle and idiomatic Go API patterns.
 
-### ☐ **Day 1: The Gin Engine**
-- [ ] Project initialization and Gin installation
-- [ ] Basic `gin.Default()` setup and the "Ping" endpoint
+### ☑ **Day 1: The Gin Engine**
+- [x] Project initialization and Gin installation
+- [x] Basic `gin.Default()` setup and the "Ping" endpoint
 
 ### ☐ **Day 2: Advanced Routing & Grouping**
 - [ ] Route grouping (`/api/v1`)
