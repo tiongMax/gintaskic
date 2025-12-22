@@ -14,9 +14,9 @@ I am building this backend-only service over one week to master the Gin lifecycl
 - [x] Project initialization and Gin installation
 - [x] Basic `gin.Default()` setup and the "Ping" endpoint
 
-### ☐ **Day 2: Advanced Routing & Grouping**
-- [ ] Route grouping (`/api/v1`)
-- [ ] Path parameters (`/tasks/:id`) and Query parameters
+### ☑ **Day 2: Advanced Routing & Grouping**
+- [x] Route grouping (`/api/v1`)
+- [x] Path parameters (`/tasks/:id`) and Query parameters
 
 ### ☐ **Day 3: Request Binding & Validation**
 - [ ] Concepts: `c.ShouldBindJSON`, Struct Tags (`binding:"required"`)
@@ -109,7 +109,6 @@ v1 := router.Group("/api/v1")
     v1.GET("/tasks", GetTasks)
     v1.POST("/tasks", CreateTask)
 }
-
 ```
 
 ---
@@ -119,14 +118,13 @@ v1 := router.Group("/api/v1")
 ```text
 .
 ├── main.go           # Entry point & Router setup
-├── handlers/         # Controller logic (The "C" in MVC)
-│   └── task.go
-├── models/           # Data structures & Validation tags
-│   └── task.go
-├── middleware/       # Custom Gin middleware
-├── repository/       # Database logic (Day 4+)
+├── internal/
+│   ├── handlers/     # Controller logic (The "C" in MVC)
+│   │   └── task_handler.go
+│   ├── model/        # Data structures & Validation tags
+│   │   └── task.go
+│   └── repository/   # Database logic
+│       └── task_repository.go
 ├── go.mod
 └── README.md
-
 ```
-
