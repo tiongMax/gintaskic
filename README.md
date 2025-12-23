@@ -18,9 +18,9 @@ I am building this backend-only service over one week to master the Gin lifecycl
 - [x] Route grouping (`/api/v1`)
 - [x] Path parameters (`/tasks/:id`) and Query parameters
 
-### ☐ **Day 3: Request Binding & Validation**
-- [ ] Concepts: `c.ShouldBindJSON`, Struct Tags (`binding:"required"`)
-- [ ] Implementation: Creating tasks with automatic validation
+### ☑ **Day 3: Request Binding & Validation**
+- [x] Concepts: `c.ShouldBindJSON`, Struct Tags (`binding:"required"`)
+- [x] Implementation: Creating tasks with automatic validation
 
 ### ☐ **Day 4: Persistence with GORM**
 - [ ] Concepts: ORM vs Raw SQL, SQLite setup
@@ -70,9 +70,9 @@ go run main.go
 3. **Test the API:**
 ```bash
 # Create a task
-$ curl -X POST http://localhost:8080/api/v1/tasks \
+$ curl -X POST http://localhost:8082/api/v1/tasks \
   -H "Content-Type: application/json" \
-  -d '{"title": "Learn Gin", "description": "Finish Day 1 of Winter Arc"}'
+  -d '{"title": "Learn Gin", "status": "pending"}'
 
 ```
 
