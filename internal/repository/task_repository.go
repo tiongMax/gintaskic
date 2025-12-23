@@ -1,6 +1,9 @@
 package repository
 
 import (
+	"strconv"
+	"time"
+
 	"github.com/tiongMax/gintaskic/internal/model"
 )
 
@@ -29,4 +32,19 @@ func GetTaskByID(id string) (*model.Task, bool) {
 		}
 	}
 	return nil, false
+}
+
+func CreateTask(task model.Task) model.Task {
+	id := len(model.MockTasks) + 1
+
+	newTask := model.Task{
+		ID:        strconv.Itoa(id),
+		Title:     task.Title,
+		Status:    task.Status,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+
+	model.MockTasks = append(model.MockTasks, newTask)
+	return newTask
 }

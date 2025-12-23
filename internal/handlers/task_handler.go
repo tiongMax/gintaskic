@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/tiongMax/gintaskic/internal/model"
 	"github.com/tiongMax/gintaskic/internal/repository"
 )
 
@@ -25,4 +26,15 @@ func GetTaskByIDHandler(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, task)
+}
+
+func CreateTaskHandler(c *gin.Context) {
+	var task model.Task
+	if err := c.ShouldBindJSON(&task); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	task = repository.CreateTask(task)
+	c.JSON(http.StatusCreated, task)
 }

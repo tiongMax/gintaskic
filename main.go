@@ -12,6 +12,7 @@ func main() {
 	{
 		v1.GET("/tasks", handlers.GetTasksHandler)
 		v1.GET("/tasks/:id", handlers.GetTaskByIDHandler)
+		v1.POST("/tasks", handlers.CreateTaskHandler)
 	}
 
 	router.Run(":8082")
