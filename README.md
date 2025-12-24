@@ -23,7 +23,7 @@ I am building this backend-only service over one week to master the Gin lifecycl
 - [x] Implementation: Creating tasks with automatic validation
 
 ### ☐ **Day 4: Persistence with GORM**
-- [ ] Concepts: ORM vs Raw SQL, SQLite setup
+- [ ] Concepts: ORM vs Raw SQL, PostgreSQL setup
 - [ ] Implementation: Moving from in-memory slices to a real database
 
 ### ☐ **Day 5: Gin Middleware Mastery**
