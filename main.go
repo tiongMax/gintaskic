@@ -1,19 +1,21 @@
 package main
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
-	"github.com/tiongMax/gintaskic/internal/handlers"
+
+	"github.com/tiongMax/gintaskic/internal/config"
+	"github.com/tiongMax/gintaskic/internal/router"
 )
 
 func main() {
-	router := gin.Default()
-
-	v1 := router.Group("/api/v1")
-	{
-		v1.GET("/tasks", handlers.GetTasksHandler)
-		v1.GET("/tasks/:id", handlers.GetTaskByIDHandler)
-		v1.POST("/tasks", handlers.CreateTaskHandler)
+	cfg, err := config.LoadEnvAndGetConfig()
+	if err != nil {
+		log.Fatalf("Failed to load config: %v", err)
 	}
 
-	router.Run(":8082")
+	r := gin.Default()
+	router.SetupRouter(r)
+	r.Run(":" + cfg.Port)
 }
