@@ -21,6 +21,6 @@ func main() {
 	// }
 
 	r := gin.Default()
-	router.SetupRouter(r)
+	router.SetupRouter(r, cfg)
 	r.Run(":" + cfg.Port)
 }
