@@ -1,26 +1,37 @@
 package database
 
-// import (
-// 	"fmt"
-// 	"log"
+import (
+	"context"
+	"fmt"
+	"log"
+	"time"
 
-// 	"github.com/tiongMax/gintaskic/internal/config"
-// 	"gorm.io/driver/postgres"
-// 	"gorm.io/gorm"
-// )
+	"github.com/tiongMax/gintaskic/internal/config"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+)
 
-// var DB *gorm.DB
+var Client *mongo.Client
+var DB *mongo.Database
 
-// func Connect(cfg config.DatabaseConfig) error {
-// 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
-// 		cfg.Host, cfg.User, cfg.Password, cfg.Name, cfg.Port, cfg.SSLMode)
+func Connect(cfg config.DatabaseConfig) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 
-// 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-// 	if err != nil {
-// 		return fmt.Errorf("failed to connect to database: %w", err)
-// 	}
+	clientOptions := options.Client().ApplyURI(cfg.MongoURI)
+	client, err := mongo.Connect(ctx, clientOptions)
+	if err != nil {
+		return fmt.Errorf("failed to connect to database: %w", err)
+	}
 
-// 	DB = db
-// 	log.Println("Successfully connected to the database")
-// 	return nil
-// }
+	// Ping the database to verify connection
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		return fmt.Errorf("failed to ping database: %w", err)
+	}
+
+	Client = client
+	DB = client.Database(cfg.DBName)
+	log.Println("Successfully connected to the database")
+	return nil
+}

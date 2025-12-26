@@ -2,6 +2,8 @@ package model
 
 import (
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 const (
@@ -12,21 +14,9 @@ const (
 )
 
 type Task struct {
-	ID        string    `json:"id"`
-	Title     string    `json:"title" binding:"required,min=3"`
-	Status    string    `json:"status" binding:"required,oneof=pending completed in_progress cancelled"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-}
-
-var MockTask = Task{
-	ID:        "1",
-	Title:     "Learn Gin",
-	Status:    TaskStatusPending,
-	CreatedAt: time.Now(),
-	UpdatedAt: time.Now(),
-}
-
-var MockTasks = []Task{
-	MockTask,
+	ID        primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Title     string             `bson:"title" json:"title" binding:"required,min=3"`
+	Status    string             `bson:"status" json:"status" binding:"required,oneof=pending completed in_progress cancelled"`
+	CreatedAt time.Time          `bson:"created_at" json:"created_at"`
+	UpdatedAt time.Time          `bson:"updated_at" json:"updated_at"`
 }

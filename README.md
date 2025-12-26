@@ -26,13 +26,13 @@ I am building this backend-only service over one week to master the Gin lifecycl
 - [ ] Concepts: ORM vs Raw SQL, PostgreSQL setup
 - [ ] Implementation: Moving from in-memory slices to a real database
 
-### ☐ **Day 5: Gin Middleware Mastery**
-- [ ] Concepts: `gin.HandlerFunc`, `c.Next()`, `c.Abort()`
-- [ ] Implementation: Custom Auth-Key middleware and Request ID tracking
+### ☑ **Day 5: Gin Middleware Mastery**
+- [x] Concepts: `gin.HandlerFunc`, `c.Next()`, `c.Abort()`
+- [x] Implementation: Custom Logger middleware and Centralized Error Handling
 
 ### ☐ **Day 6: Error Handling & Responses**
 - [ ] Concepts: Standardizing JSON error envelopes
-- [ ] Implementation: Centralized error handling logic
+- [ ] Implementation: Centralized error handling logic (Implemented in Day 5)
 
 ### ☐ **Day 7: Performance & Documentation**
 - [ ] Concepts: Benchmarking Gin handlers
@@ -110,6 +110,19 @@ v1 := router.Group("/api/v1")
     v1.POST("/tasks", CreateTask)
 }
 ```
+4. **Middleware**
+
+Gin middleware allows us to intercept requests before they reach the handler. This is perfect for cross-cutting concerns like logging and error handling.
+
+```go
+func Logger() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        start := time.Now()
+        c.Next()
+        log.Printf("Request processed in %v", time.Since(start))
+    }
+}
+```
 
 ---
 
@@ -119,12 +132,18 @@ v1 := router.Group("/api/v1")
 .
 ├── main.go           # Entry point & Router setup
 ├── internal/
+│   ├── config/       # Configuration logic
 │   ├── handlers/     # Controller logic (The "C" in MVC)
 │   │   └── task_handler.go
+│   ├── middleware/   # Middleware (Logger, ErrorHandler)
+│   │   ├── error_handler.go
+│   │   └── logger.go
 │   ├── model/        # Data structures & Validation tags
 │   │   └── task.go
-│   └── repository/   # Database logic
-│       └── task_repository.go
+│   ├── repository/   # Database logic
+│   │   └── task_repository.go
+│   └── router/       # Routing setup
+│       └── router.go
 ├── go.mod
 └── README.md
 ```

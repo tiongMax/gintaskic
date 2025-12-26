@@ -5,18 +5,14 @@ import (
 )
 
 type Config struct {
-	Port string
-	// Database DatabaseConfig
+	Port     string
+	Database DatabaseConfig
 }
 
-// type DatabaseConfig struct {
-// 	Host     string
-// 	User     string
-// 	Password string
-// 	Name     string
-// 	Port     string
-// 	SSLMode  string
-// }
+type DatabaseConfig struct {
+	MongoURI string
+	DBName   string
+}
 
 func GetConfig() (*Config, error) {
 	port := os.Getenv("PORT")
@@ -24,18 +20,21 @@ func GetConfig() (*Config, error) {
 		port = "8082"
 	}
 
-	// dbConfig := DatabaseConfig{
-	// 	Host:     os.Getenv("DB_HOST"),
-	// 	User:     os.Getenv("DB_USER"),
-	// 	Password: os.Getenv("DB_PASSWORD"),
-	// 	Name:     os.Getenv("DB_NAME"),
-	// 	Port:     os.Getenv("DB_PORT"),
-	// 	SSLMode:  os.Getenv("DB_SSLMODE"),
-	// }
+	dbConfig := DatabaseConfig{
+		MongoURI: os.Getenv("MONGO_URI"),
+		DBName:   os.Getenv("DB_NAME"),
+	}
+
+	if dbConfig.MongoURI == "" {
+		dbConfig.MongoURI = "mongodb://localhost:27017"
+	}
+	if dbConfig.DBName == "" {
+		dbConfig.DBName = "taskdb"
+	}
 
 	return &Config{
-		Port: port,
-		// Database: dbConfig,
+		Port:     port,
+		Database: dbConfig,
 	}, nil
 }
 

@@ -11,21 +11,30 @@ import (
 // GetTasksHandler handles GET /tasks
 func GetTasksHandler(c *gin.Context) {
 	status := c.Query("status")
-	tasks := task.GetAllTasks(status)
+	tasks, err := task.GetAllTasks(status)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, tasks)
 }
 
 // GetTaskByIDHandler handles GET /tasks/:id
 func GetTaskByIDHandler(c *gin.Context) {
 	id := c.Param("id")
-	task, found := task.GetTaskByID(id)
+	foundTask, err := task.GetTaskByID(id)
 
-	if !found {
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	if foundTask == nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Task not found"})
 		return
 	}
 
-	c.JSON(http.StatusOK, task)
+	c.JSON(http.StatusOK, foundTask)
 }
 
 func CreateTaskHandler(c *gin.Context) {
@@ -35,6 +44,10 @@ func CreateTaskHandler(c *gin.Context) {
 		return
 	}
 
-	createdTask := task.CreateTask(reqTask)
+	createdTask, err := task.CreateTask(reqTask)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusCreated, createdTask)
 }
