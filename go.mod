@@ -3,6 +3,7 @@ module github.com/tiongMax/gintaskic
 go 1.25.0
 
 require (
+	github.com/gin-contrib/cors v1.7.6
 	github.com/gin-gonic/gin v1.11.0
 	github.com/joho/godotenv v1.5.1
 	go.mongodb.org/mongo-driver v1.17.6
