@@ -8,8 +8,7 @@ import (
 )
 
 func SetupRouter(r *gin.Engine, cfg *config.Config) *gin.Engine {
-	r.Use(middleware.Logger())
-	r.Use(middleware.ErrorHandler())
+	r.Use(middleware.Cors())
 
 	v1 := r.Group("/api/v1")
 	{
