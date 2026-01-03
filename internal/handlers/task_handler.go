@@ -5,9 +5,10 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/mongo"
+
 	"github.com/tiongMax/gintaskic/internal/model"
 	"github.com/tiongMax/gintaskic/internal/repository/task"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // GetTasksHandler handles GET /tasks with search, pagination, and status filter
